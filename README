@@ -1,1 +1,6 @@
-SIMS (Student Information Management System)
+AUTHORS
+	Tavis
+
+INSTALL
+	make
+	./sims
