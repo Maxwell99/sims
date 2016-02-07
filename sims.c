@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "print_ui.h"
+#include "print.h"
 
 int main(void)
 {
