@@ -1,12 +1,14 @@
-SIMS 
-	Student Information Management System
+# Student Information Management System
 
 AUTHORS
+
 	Tavis
 
 Email
+
 	tengwei8888@aliyun.com
 
 INSTALL
+
 	make
 	./sims
