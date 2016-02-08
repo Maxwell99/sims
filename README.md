@@ -7,8 +7,3 @@ AUTHOR
 Email
 
 	tengweiyang@aliyun.com
-
-INSTALL
-
-	make
-	./sims
