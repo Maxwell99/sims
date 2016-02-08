@@ -10,7 +10,11 @@ int main(void)
 	//FILE **stu = NULL;
 
 	//System_Initialize(&(*user), &(*stu)); 
-	Print_Sys_Interface(); 
+	while (1) {
+		Print_Sys_Interface(); 
+		if (getchar() == 'q')
+			break; 
+	}
 
 	return 0; 
 }
