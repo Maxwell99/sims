@@ -1,6 +1,6 @@
 # Student Information Management System
 
-AUTHORS
+AUTHOR
 
 	Tavis
 
