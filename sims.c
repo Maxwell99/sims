@@ -6,10 +6,10 @@
 
 int main(void)
 {
-	FILE **user = NULL; 
-	FILE **stu = NULL;
+	//FILE **user = NULL; 
+	//FILE **stu = NULL;
 
-	System_Initialize(&(*user), &(*stu)); 
+	//System_Initialize(&(*user), &(*stu)); 
 	Print_Sys_Interface(); 
 
 	return 0; 

@@ -7,7 +7,7 @@ void Print_Sys_Interface (void)
 	system("clear"); 
 	printf("\033[44;37m+------------------------------------------------------------------------------+\033[0m\n"); 
 	printf("\033[44;37m|                                                                              |\033[0m\n"); 
-	printf("\033[44;37m|                    Student Information Management System                     |\033[0m\n"); 
+	printf("\033[1;44;37m|                    Student Information Management System                     |\033[0m\n"); 
 	printf("\033[44;37m|                                                                              |\033[0m\n"); 
 	printf("\033[44;37m+------------------------------------------------------------------------------+\033[0m\n"); 
 	printf("\033[44;37m|                                                                              |\033[0m\n"); 
