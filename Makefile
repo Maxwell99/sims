@@ -1,11 +1,14 @@
-sims : sims.o print.o config.o 
+sims: sims.o print.o config.o login.o
 
-sims.o : sims.c
+sims.o: sims.c
 
-config.o : config.c
+config.o: config.c
 
-print.o : print.c
+print.o: print.c
 
-.PHONY : clean
-clean : 
-	rm sims sims.o print.o config.o
+login.o: login.c
+
+.PHONY: clean
+
+clean: 
+	rm sims *.o
