@@ -1,36 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <string.h>
 #include <termios.h>
+#include <unistd.h>
 
 #include "user.h"
 
-void User_Login(struct user **pUser)
-{
-	struct user log; 
-	memset(&log, 0, sizeof(struct user)); 
+int getch(void) 
+{  
+	int ch; 
+	struct termios tm, tm_bak;  
 
+	if (tcgetattr(STDIN_FILENO, &tm) < 0) {
+		perror("tcgetattr"); 
+		exit(-1); 
+	}
+	tm_bak = tm;  
+
+	cfmakeraw(&tm);  
+	if(tcsetattr(STDIN_FILENO, TCSANOW, &tm) < 0) {
+		perror("tcsetattr"); 
+		exit(-1); 
+	}
+	ch = getchar(); 
+
+	if(tcsetattr(STDIN_FILENO, TCSANOW, &tm_bak) < 0) {
+		perror("tcsetattr"); 
+		exit(-1); 
+	}
+	return ch; 
+}  
+
+void User_Login(struct user *login)
+{
 	int i; 
 	char ch; 
 	printf("\033[11;27H"); 
 	for (i = 0; i < ID_LEN; i++) {
-		scanf("%c", &log.ID[i]); 
-		if (log.ID[i] == '\n') {
-			log.ID[i] = 0; 
+		ch = getch(); 
+		if (ch == '\r') {
 			break; 
 		}
+		else if (ch >= '!' && ch <= '~') {
+			login->ID[i] = ch; 
+			putchar(login->ID[i]); 
+		}
+		else {
+			i--; 
+		}
 	}
-	printf("\033[11;27H\033[32m%s\033[0m", log.ID); 
+	login->ID[i] = 0; 
 
 	printf("\033[14;27H"); 
 	for (i = 0; i < KEY_LEN; i++) {
-		log.KEY[i] = getchar(); 
-		if (log.KEY[i] == '\n') {
-			log.KEY[i] == 0; 
+		ch = getch(); 
+		if (ch == '\r') {
 			break; 
 		}
-		putchar('\b'); 
-		fputs("*", stdout); 
+		else if (ch >= '!' && ch <= '~') {
+			login->KEY[i] = ch; 
+			putchar('*'); 
+		}
+		else {
+			i--; 
+		}
 	}
-
+	login->KEY[i] = 0; 
 }

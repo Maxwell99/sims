@@ -1,1 +1,1 @@
-void User_Login(struct user **); 
+void User_Login(struct user *); 
