@@ -32,6 +32,8 @@ void System_Init(struct user **user_head, struct stu **stu_head)
 		perror("fopen fstu"); 
 		exit(-1); 
 	}
+	
+	Init_Stu_Link_List(stu_head); 
 	//puts("open fp_stu success"); 
 	
 	fclose(fp_user); 

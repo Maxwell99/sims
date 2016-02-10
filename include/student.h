@@ -5,7 +5,7 @@
 
 struct stu {
 	char ID[STU_ID_LEN]; 
-	char name[STU_NAME_LEN]; 
-	MarkType mark[STU_COURSE_NUM]; 
+	char Name[STU_NAME_LEN]; 
+	MarkType Grade[STU_COURSE_NUM]; 
 	struct stu * next; 
 }; 

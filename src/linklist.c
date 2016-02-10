@@ -112,6 +112,7 @@ void Print_Stu_Info(struct stu * stuLinkList)
 		}		
 }
 
+/*
 void Print_Average_Grade(struct stu * stuLinkList)
 {
 		int i, j, sum; 
@@ -127,3 +128,4 @@ void Print_Average_Grade(struct stu * stuLinkList)
 				printf("The %s average grade is %d\n", COURSE[i], sum / STU_NUM); 
 		}
 }
+*/

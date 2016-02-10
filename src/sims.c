@@ -16,6 +16,8 @@ int main(void)
 	memset(&login, 0, sizeof(struct user)); 
 
 	System_Init(&user_head, &stu_head); 
+	Add_One_Stu_Info(&stu_head); 
+	Print_Stu_Info(stu_head); 
 
 	/*
 	Print_Sys_Interface(); 
