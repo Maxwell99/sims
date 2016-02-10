@@ -1,14 +1,24 @@
-sims: sims.o print.o config.o login.o
+DIR_INC = ./include
+DIR_SRC = ./src
+DIR_OBJ = ./obj
+DIR_BIN = ./bin
 
-sims.o: sims.c
+SRC = $(wildcard ${DIR_SRC}/*.c)
+OBJ = $(patsubst %.c, ${DIR_OBJ}/%.o, $(notdir ${SRC}))
 
-config.o: config.c
+TARGET = sims
+BIN_TARGET = ${DIR_BIN}/${TARGET}
 
-print.o: print.c
+CC = gcc
+CFLAGS = -I${DIR_INC}
 
-login.o: login.c
+${BIN_TARGET}: ${OBJ}
+	$(CC) $(OBJ) -o $@
+
+${DIR_OBJ}/%.o: ${DIR_SRC}/%.c
+	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY: clean
-
 clean: 
-	rm sims *.o
+	find ${DIR_OBJ} -name *.o -exec rm -rf {} \; 
+	find ${DIR_BIN} -name * -exec rm -rf {} \; 
