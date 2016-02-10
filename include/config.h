@@ -1,1 +1,1 @@
-void System_Initialize(FILE **user, FILE **stu); 
+void System_Init(struct user **, struct stu **); 

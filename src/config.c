@@ -2,38 +2,40 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#define FILE_NAME_LEN 10
+#include "user.h"
+#include "student.h"
+#include "linklist.h"
 
-void System_Initialize(FILE *user)
+#define FILE_NAME_LEN 30
+
+void System_Init(struct user **user_head, struct stu **stu_head)
 {
-	
 	FILE *config = fopen("./etc/config", "r"); 
-	char user_info[FILE_NAME_LEN] = {0}; 
-	char stu_info[FILE_NAME_LEN] = {0}; 
 	if (config == NULL) {
 		perror("fopen config"); 
-		exit(1); 
+		exit(-1); 
 	}
-
-	fscanf(config, "%s%s", user_info, stu_info); 
-	printf("%s\n%s\n", user_info, stu_info); 
-		
-	*user = (FILE*) malloc(sizeof(FILE*)); 
-	printf("get dynamic memory success"); 
-	*user = fopen(user_info, "w+"); 
-	if (user == NULL) {
-		perror("get user information failed"); 
-		exit(1); 
+	char fuser[FILE_NAME_LEN] = {0}; 
+	char fstu[FILE_NAME_LEN] = {0}; 
+	fscanf(config, "%s%s", fuser, fstu); 
+	//printf("%s\n%s\n", fuser, fstu); 
+	
+	FILE *fp_user = fopen(fuser, "r"); 
+	if (fp_user == NULL) {
+		perror("fopen fuser"); 
+		exit(-1); 
 	}
-	*stu = (FILE*) malloc(sizeof(FILE*)); 
-	printf("get dynamic memory success"); 
-	*stu = fopen(stu_info, "w+"); 
-	if (stu == NULL) {
-		perror("get student information failed"); 
-		exit(1); 
+	//puts("open fp_user success"); 
+	
+	FILE *fp_stu = fopen(fstu, "w+"); 
+	if (fp_stu == NULL) {
+		perror("fopen fstu"); 
+		exit(-1); 
 	}
-
-	fclose(*user); 
-	fclose(*stu); 
+	//puts("open fp_stu success"); 
+	
+	fclose(fp_user); 
+	fclose(fp_stu); 
 	fclose(config); 
 }
+
