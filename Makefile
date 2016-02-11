@@ -21,4 +21,4 @@ ${DIR_OBJ}/%.o: ${DIR_SRC}/%.c
 .PHONY: clean
 clean: 
 	find ${DIR_OBJ} -name *.o -exec rm -rf {} \; 
-	find ${DIR_BIN} -name * -exec rm -rf {} \; 
+	find ${DIR_BIN} -name sims -exec rm -f {} \; 
