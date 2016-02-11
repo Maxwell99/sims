@@ -9,13 +9,13 @@ TARGET = sims
 BIN_TARGET = ${TARGET}
 
 CC = gcc
-CFLAGS = -I${DIR_INC}
+CFLAGS = -Wall -I${DIR_INC}
 
 ${BIN_TARGET}: ${OBJ}
 	$(CC) $(OBJ) -o $@
 
 ${DIR_OBJ}/%.o: ${DIR_SRC}/%.c
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -c $< -o $@ $(CFLAGS) 
 
 .PHONY: clean
 clean: 
