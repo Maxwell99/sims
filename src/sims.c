@@ -17,8 +17,7 @@ int main(void)
 
 	Print_Sys_Interface(); 
 	User_Login(&login); 
-	printf("\n%s\n", login.ID); 
-	printf("%s\n", login.KEY); 
+	Print_Stu_Interface(); 
 
 	return 0; 
 }

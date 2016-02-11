@@ -4,10 +4,10 @@
 
 #define FILE_NAME_LEN 10
 
-void System_Initialize(FILE **user, FILE **stu)
+void System_Initialize(FILE *user)
 {
 	
-	FILE *config = fopen("config", "w+"); 
+	FILE *config = fopen("./etc/config", "r"); 
 	char user_info[FILE_NAME_LEN] = {0}; 
 	char stu_info[FILE_NAME_LEN] = {0}; 
 	if (config == NULL) {

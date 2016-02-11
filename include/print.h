@@ -1,4 +1,4 @@
 void Print_Sys_Interface (void); 
 void Print_Root_Interface (void); 
-void Print_Teacher_Interface(void); 
-void Print_Student_Interfacd(void); 
+void Print_Tea_Interface(void); 
+void Print_Stu_Interfacd(void); 
