@@ -1,13 +1,12 @@
 DIR_INC = ./include
 DIR_SRC = ./src
 DIR_OBJ = ./obj
-DIR_BIN = ./bin
 
 SRC = $(wildcard ${DIR_SRC}/*.c)
 OBJ = $(patsubst %.c, ${DIR_OBJ}/%.o, $(notdir ${SRC}))
 
 TARGET = sims
-BIN_TARGET = ${DIR_BIN}/${TARGET}
+BIN_TARGET = ${TARGET}
 
 CC = gcc
 CFLAGS = -I${DIR_INC}
