@@ -40,4 +40,3 @@ void System_Init(struct user **user_head, struct stu **stu_head)
 	fclose(fp_stu); 
 	fclose(config); 
 }
-
