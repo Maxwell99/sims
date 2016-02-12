@@ -1,22 +1,27 @@
-DIR_INC = ./include
-DIR_SRC = ./src
-DIR_OBJ = ./obj
-
-SRC = $(wildcard ${DIR_SRC}/*.c)
-OBJ = $(patsubst %.c, ${DIR_OBJ}/%.o, $(notdir ${SRC}))
-
-TARGET = sims
-BIN_TARGET = ${TARGET}
-
+# Make variables (CC, etc...)
 CC = gcc
-CFLAGS = -Wall -I${DIR_INC}
+CFLAGS = -Wall -I $(DIR_INC)
 
-${BIN_TARGET}: ${OBJ}
-	$(CC) $(OBJ) -o $@
+BIN_TARGET = sims.exe
 
-${DIR_OBJ}/%.o: ${DIR_SRC}/%.c
-	$(CC) -c $< -o $@ $(CFLAGS) 
+DIR_SRC = $(wildcard src)
+DIR_OBJ = $(wildcard bin)
+DIR_INC = $(wildcard include) 
 
-.PHONY: clean
+SRC = $(wildcard $(DIR_SRC)/*.c)
+OBJ = $(patsubst %.c, $(DIR_OBJ)/%.o, $(notdir $(SRC)))
+
+# ===========================================================================
+# Rules shared between targets and prerequisites
+
+$(BIN_TARGET): $(OBJ)
+	$(CC) $^ -o $@
+
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
+	$(CC) -c $^ -o $@ $(CFLAGS) 
+
+PHONY += clean
 clean: 
-	find ${DIR_OBJ} -name *.o -exec rm -rf {} \; 
+	@rm -f $(OBJ) $(BIN_TARGET)
+
+.PHONY: PHONY

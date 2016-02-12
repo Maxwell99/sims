@@ -6,11 +6,11 @@
 #include "student.h"
 #include "linklist.h"
 
-#define FILE_NAME_LEN 30
+#define FILE_NAME_LEN 20
 
 void System_Init(struct user **user_head, struct stu **stu_head)
 {
-	FILE *config = fopen("./etc/config", "r"); 
+	FILE *config = fopen("src/config", "r"); 
 	if (config == NULL) {
 		perror("fopen config"); 
 		exit(-1); 
@@ -32,9 +32,9 @@ void System_Init(struct user **user_head, struct stu **stu_head)
 		perror("fopen fstu"); 
 		exit(-1); 
 	}
+	//puts("open fp_stu success"); 
 	
 	Init_Stu_Link_List(stu_head); 
-	//puts("open fp_stu success"); 
 	
 	fclose(fp_user); 
 	fclose(fp_stu); 
