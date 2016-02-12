@@ -20,6 +20,7 @@ void System_Init(struct user **user_head, struct stu **stu_head)
 	fscanf(config, "%s%s", fuser, fstu); 
 	//printf("%s\n%s\n", fuser, fstu); 
 	
+	Init_User_Link_List(user_head); 
 	FILE *fp_user = fopen(fuser, "r"); 
 	if (fp_user == NULL) {
 		perror("fopen fuser"); 
@@ -27,6 +28,7 @@ void System_Init(struct user **user_head, struct stu **stu_head)
 	}
 	//puts("open fp_user success"); 
 	
+	Init_Stu_Link_List(stu_head); 
 	FILE *fp_stu = fopen(fstu, "w+"); 
 	if (fp_stu == NULL) {
 		perror("fopen fstu"); 
@@ -34,7 +36,6 @@ void System_Init(struct user **user_head, struct stu **stu_head)
 	}
 	//puts("open fp_stu success"); 
 	
-	Init_Stu_Link_List(stu_head); 
 	
 	fclose(fp_user); 
 	fclose(fp_stu); 

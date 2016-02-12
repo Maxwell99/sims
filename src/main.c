@@ -7,6 +7,7 @@
 #include "init.h"
 #include "print.h"
 #include "login.h"
+#include "linklist.h"
 
 int main(void)
 {
@@ -17,13 +18,14 @@ int main(void)
 
 	System_Init(&user_head, &stu_head); 
 
+	/*
 	Print_Sys_Interface(); 
 	User_Login(&login); 
 
+	*/
+	
 	Add_One_Stu_Info(&stu_head); 
 	Print_Stu_Info(stu_head); 
-	
-	Print_Stu_Interface(); 
 
 	return 0; 
 }

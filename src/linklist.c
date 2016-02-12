@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "user.h"
 #include "student.h"
 
 char COURSE[STU_COURSE_NUM][10] = {"Math", "English", "Chinese", "Sum"}; 
@@ -10,6 +11,12 @@ void Init_Stu_Link_List(struct stu ** stuLinkList)
 {
 		*stuLinkList = (struct stu *) malloc(sizeof(struct stu)); 
 		memset(*stuLinkList, 0, sizeof(struct stu)); 
+}
+
+void Init_User_Link_List(struct user ** userLinkList)
+{
+		*userLinkList = (struct user *) malloc(sizeof(struct user)); 
+		memset(*userLinkList, 0, sizeof(struct user)); 
 }
 
 void Delete_Stu_Link_List(struct stu ** stuLinkList)
