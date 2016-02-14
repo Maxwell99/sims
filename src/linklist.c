@@ -141,11 +141,11 @@ void Print_All_User_Info(ElemType_USER * list_head)
 	list_head = list_head->next; 
 	if (list_head != NULL) {
 		printf("\n-----------------------------------------\n"); 
-		printf("\033[31mID\tName\t\033[0m"); 
+		printf("\033[31mID\tName\tKey\033[0m"); 
 		printf("\n-----------------------------------------\n"); 
 
 		while (list_head!= NULL) {
-			printf("%s\t%s\t", list_head->ID, list_head->Name); 
+			printf("%s\t%s\t%s", list_head->ID, list_head->Name, list_head->Key); 
 			printf("\n"); 
 			list_head = list_head->next; 
 		}

@@ -9,7 +9,8 @@
 #include "linklist.h"
 
 #define FILE_NAME_LEN 20
-#define BUFSIZE 100
+#define TRUE 0
+#define FALSE -1
 
 void System_Init(struct user ** user_list_head, struct stu ** stu_list_head)
 {
@@ -145,33 +146,63 @@ void User_Login(struct user *login)
 	for (i = 0; i < ID_LEN; i++) {
 		ch = getch(); 
 		if (ch == '\r') {
+			printf("\n"); 
 			break; 
 		}
 		else if (ch >= '!' && ch <= '~') {
 			login->ID[i] = ch; 
 			putchar(login->ID[i]); 
 		}
-		else {
+		else if (ch == '\b') {
 			i--; 
+			if (i >= 0) {
+				putchar('\b'); 
+				putchar(' '); 
+				putchar('\b');
+				login->ID[i] = 0; 
+				i--; 
+			}
 		}
 	}
 	login->ID[i] = 0; 
-	printf("\n"); 
+	//puts(login->ID); 
 
 	printf("\033[1mPassWD:\033[0m"); 
 	for (i = 0; i < KEY_LEN; i++) {
 		ch = getch(); 
 		if (ch == '\r') {
+			printf("\n"); 
 			break; 
 		}
-		else if (ch >= '!' && ch <= '~') {
+		else if (ch >= ' ' && ch <= '~') {
 			login->Key[i] = ch; 
 			putchar('*'); 
 		}
-		else {
+		else if (ch == '\b') {
 			i--; 
+			if (i >= 0) {
+				putchar('\b'); 
+				putchar(' '); 
+				putchar('\b');
+				login->Key[i] = 0; 
+				i--; 
+			}
 		}
 	}
 	login->Key[i] = 0; 
-	printf("\n"); 
+	//puts(login->Key); 
+}
+
+int User_Authonrize(struct user * list_head, struct user * login)
+{
+	User_Login(login);
+	list_head = list_head->next; 
+	while (list_head != NULL) {
+		if (!strcmp(login->ID,list_head->ID)) {
+			if (!strcmp(login->Key,list_head->Key))
+				return TRUE;
+		}
+		list_head = list_head->next; 
+	}
+	return FALSE; 
 }

@@ -6,4 +6,4 @@ void Print_Root_Interface(void);
 void Print_Tea_Interface(void); 
 void Print_Stu_Interface(void); 
 
-void User_Login(struct user *login); 
+int User_Authonrize(struct user *, struct user *); 

@@ -5,7 +5,6 @@
 
 int getch(void) 
 {  
-	int ch; 
 	struct termios tm, tm_bak;  
 
 	if (tcgetattr(STDIN_FILENO, &tm) < 0) {
@@ -19,11 +18,15 @@ int getch(void)
 		perror("tcsetattr"); 
 		exit(-1); 
 	}
-	ch = getchar(); 
+	int ch = getchar(); 
 
 	if(tcsetattr(STDIN_FILENO, TCSANOW, &tm_bak) < 0) {
 		perror("tcsetattr"); 
 		exit(-1); 
 	}
-	return ch; 
+
+	if (ch == 3 || ch == 4) 
+		exit(0); 
+	else
+		return ch; 
 }  

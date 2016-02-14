@@ -16,15 +16,19 @@ int main(void)
 
 	System_Init(&user, &stu); 
 	Print_Sys_Interface(); 
-	User_Login(&login); 
 	
+	for (;;) {
+		if (!User_Authonrize(user, &login)) {
+			Print_All_Stu_Info(stu); 
+		}
+		else {
+			printf("ID or Key was wrong!\n"); 
+		}	
+	}
+
 	//Add_One_Stu_Info(&stu); 
+	//File_Save(user,stu); 
 
-	Print_All_User_Info(user); 
-	Print_All_Stu_Info(stu); 
-	Print_Single_Mark_highest_Stu_Info(stu); 
-
-	File_Save(user,stu); 
 	Stu_Link_List_Destroy(&stu); 
 	User_Link_List_Destroy(&user); 
 
