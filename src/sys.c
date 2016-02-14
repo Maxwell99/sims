@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <string.h>
 
+#include "getch.h"
 #include "user.h"
 #include "student.h"
 #include "linklist.h"
@@ -123,4 +124,54 @@ void File_Save(struct user * user_list_head, struct stu * stu_list_head)
 		pstu = pstu->next; 
 	}
 	fclose(fp_stu); 
+}
+
+void Print_Sys_Interface(void)
+{
+	//printf("\033[2J"); 
+	system("clear"); 
+	printf("+---------------------------------------+\n"); 
+	printf("|                                       |\n"); 
+	printf("| \033[1mStudent Information Management System \033[0m|\n"); 
+	printf("|                                       |\n"); 
+	printf("+---------------------------------------+\n"); 
+}
+
+void User_Login(struct user *login)
+{
+	int i; 
+	char ch; 
+	printf("\033[1mUserID:\033[0m"); 
+	for (i = 0; i < ID_LEN; i++) {
+		ch = getch(); 
+		if (ch == '\r') {
+			break; 
+		}
+		else if (ch >= '!' && ch <= '~') {
+			login->ID[i] = ch; 
+			putchar(login->ID[i]); 
+		}
+		else {
+			i--; 
+		}
+	}
+	login->ID[i] = 0; 
+	printf("\n"); 
+
+	printf("\033[1mPassWD:\033[0m"); 
+	for (i = 0; i < KEY_LEN; i++) {
+		ch = getch(); 
+		if (ch == '\r') {
+			break; 
+		}
+		else if (ch >= '!' && ch <= '~') {
+			login->Key[i] = ch; 
+			putchar('*'); 
+		}
+		else {
+			i--; 
+		}
+	}
+	login->Key[i] = 0; 
+	printf("\n"); 
 }

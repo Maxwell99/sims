@@ -4,6 +4,7 @@
 
 #include "user.h"
 #include "student.h"
+#include "getch.h"
 
 #define ElemType_STU struct stu
 #define ElemType_USER struct user
@@ -126,7 +127,7 @@ void Print_All_Stu_Info(ElemType_STU * list_head)
 		while (list_head!= NULL) {
 				printf("%s\t%s\t", list_head->ID, list_head->Name); 
 				for (i = 0; i < STU_COURSE_NUM; i++) {
-						printf("%-d\t",list_head->Grade[i]);
+						printf("%3d\t",list_head->Grade[i]);
 				}
 				printf("\n"); 
 				list_head = list_head->next; 
@@ -175,7 +176,7 @@ void Print_Single_Mark_highest_Stu_Info(ElemType_STU * list_head)
 
 				printf("%s\t%s\t", temp.ID, temp.Name); 
 				for (j = 0; j < STU_COURSE_NUM; j++){
-						printf("%-d\t",temp.Grade[j]);
+						printf("%3d\t",temp.Grade[j]);
 				}
 				printf("\n"); 
 		}
