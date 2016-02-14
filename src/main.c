@@ -59,7 +59,7 @@ int main(void)
 								Del_One_Stu_Info(&stu, key); 
 							}
 							else if (choice == 'D' || choice == 'd') {
-								Modify_One_Stu_Info(&stu, key); 
+								//Modify_One_Stu_Info(&stu, key); 
 							}
 							else if (choice == Esc) {
 								break; 

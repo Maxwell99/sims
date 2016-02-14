@@ -207,7 +207,6 @@ int User_Authonrize(struct user * list_head, struct user * login)
 
 void Print_Sys_Interface(void)
 {
-	//printf("\033[2J"); 
 	system("clear"); 
 	printf("+---------------------------------------+\n"); 
 	printf("|                                       |\n"); 
@@ -222,9 +221,13 @@ void Print_Tch_Interface(void)
 	system("clear"); 
 	printf("+---------------------------------------+\n"); 
 	printf("|                                       |\n"); 
-	printf("| \033[1mA.Reference Student Information\033[0m|\n"); 
-	printf("| \033[1mE.Exit System\033[0m                  |\n"); 
+	printf("| \033[1mA.\033[0m                      |\n"); 
+	printf("| \033[1mA.\033[0m                      |\n"); 
+	printf("| \033[1mA.\033[0m                      |\n"); 
+	printf("| \033[1mA.\033[0m                      |\n"); 
+	printf("| \033[1mA.\033[0m                      |\n"); 
 	printf("|                                       |\n"); 
+	printf("| Esc                             Enter |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
 
@@ -233,9 +236,8 @@ void Print_Stu_Interface(void)
 	system("clear"); 
 	printf("+---------------------------------------+\n"); 
 	printf("|                                       |\n"); 
-	printf("| \033[1mEnter: Reference Your Information\033[0m     |\n"); 
+	printf("| \033[1mReference Your Information\033[0m            |\n"); 
 	printf("|                                       |\n"); 
-	printf("| \033[1mEsc  : Exit System\033[0m                    |\n"); 
-	printf("|                                       |\n"); 
+	printf("| Esc                             Enter |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
