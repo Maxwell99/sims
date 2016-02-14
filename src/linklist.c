@@ -145,7 +145,7 @@ void Print_All_User_Info(ElemType_USER * list_head)
 		printf("\n-----------------------------------------\n"); 
 
 		while (list_head!= NULL) {
-			printf("%s\t%s\t%s", list_head->ID, list_head->Name, list_head->Key); 
+			printf("%s\t%s\t%s\t%d", list_head->ID, list_head->Name, list_head->Key, list_head->Level); 
 			printf("\n"); 
 			list_head = list_head->next; 
 		}

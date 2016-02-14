@@ -6,5 +6,6 @@ struct user {
 	char ID[ID_LEN]; 
 	char Name[NAME_LEN]; 
 	char Key[KEY_LEN]; 
+	int Level; 
 	struct user *next; 
 }; 

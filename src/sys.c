@@ -38,7 +38,7 @@ void System_Init(struct user ** user_list_head, struct stu ** stu_list_head)
 		puser = *user_list_head; 
 		temp_user = (struct user *) malloc(sizeof(struct user)); 
 		memset(temp_user, 0, sizeof(struct user)); 
-		fscanf(fp_user, "%s%s%s", temp_user->ID, temp_user->Name, temp_user->Key); 
+		fscanf(fp_user, "%s%s%s%d", temp_user->ID, temp_user->Name, temp_user->Key, &(temp_user->Level)); 
 
 		//sorting insert
 		while ((puser->next != NULL) && (strcmp(temp_user->ID, puser->next->ID) > 0)){
@@ -115,7 +115,7 @@ void File_Save(struct user * user_list_head, struct stu * stu_list_head)
 	}
 	struct user * puser = user_list_head->next; 
 	while (puser!= NULL) {
-		fprintf(fp_user, "%s %s %s\n", puser->ID, puser->Name, puser->Key); 
+		fprintf(fp_user, "%s %s %s %d\n", puser->ID, puser->Name, puser->Key, puser->Level);
 		puser = puser->next; 
 	}
 	fclose(fp_user); 
@@ -132,18 +132,6 @@ void File_Save(struct user * user_list_head, struct stu * stu_list_head)
 		pstu = pstu->next; 
 	}
 	fclose(fp_stu); 
-}
-
-void Print_Sys_Interface(void)
-{
-	//printf("\033[2J"); 
-	system("clear"); 
-	printf("+---------------------------------------+\n"); 
-	printf("|                                       |\n"); 
-	printf("| \033[1mStudent Information Management System \033[0m|\n"); 
-	printf("|                                       |\n"); 
-	printf("| Esc                             Enter |\n"); 
-	printf("+---------------------------------------+\n"); 
 }
 
 void User_Login(struct user *login)
@@ -207,12 +195,26 @@ int User_Authonrize(struct user * list_head, struct user * login)
 	list_head = list_head->next; 
 	while (list_head != NULL) {
 		if (!strcmp(login->ID,list_head->ID)) {
-			if (!strcmp(login->Key,list_head->Key))
+			if (!strcmp(login->Key,list_head->Key)) {
+				login->Level = list_head->Level; 
 				return TRUE;
+			}
 		}
 		list_head = list_head->next; 
 	}
 	return FALSE; 
+}
+
+void Print_Sys_Interface(void)
+{
+	//printf("\033[2J"); 
+	system("clear"); 
+	printf("+---------------------------------------+\n"); 
+	printf("|                                       |\n"); 
+	printf("| \033[1mStudent Information Management System \033[0m|\n"); 
+	printf("|                                       |\n"); 
+	printf("| Esc                             Enter |\n"); 
+	printf("+---------------------------------------+\n"); 
 }
 
 void Print_Tch_Interface(void)
@@ -237,5 +239,3 @@ void Print_Stu_Interface(void)
 	printf("|                                       |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
-
-
