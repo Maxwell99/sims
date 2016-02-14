@@ -4,7 +4,7 @@
 
 #include "user.h"
 #include "student.h"
-#include "getch.h"
+#include "tools.h"
 
 #define ElemType_STU struct stu
 #define ElemType_USER struct user

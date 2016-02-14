@@ -3,6 +3,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#define SECOND 300000000
+
 int getch(void) 
 {  
 	struct termios tm, tm_bak;  
@@ -30,3 +32,10 @@ int getch(void)
 	else
 		return ch; 
 }  
+
+void timer(int seconds) {
+	int i; 
+	while (seconds--) {
+		for (i = 0; i < SECOND; i++); 
+	}
+}

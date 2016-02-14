@@ -3,10 +3,10 @@
 #include <errno.h>
 #include <string.h>
 
-#include "getch.h"
 #include "user.h"
 #include "student.h"
 #include "linklist.h"
+#include "tools.h"
 
 #define FILE_NAME_LEN 20
 #define TRUE 0
@@ -107,14 +107,21 @@ void File_Save(struct user * user_list_head, struct stu * stu_list_head)
 	//printf("%s\n%s\n", user_file_name, stu_file_name); 
 	fclose(config); 
 	
-	FILE *fp_user = fopen(user_file_name, "r+"); 
+	//Save User Infomation
+	FILE *fp_user = fopen(user_file_name, "w"); 
 	if (fp_user == NULL) {
 		perror("fopen user_file_name"); 
 		exit(-1); 
 	}
+	struct user * puser = user_list_head->next; 
+	while (puser!= NULL) {
+		fprintf(fp_user, "%s %s %s\n", puser->ID, puser->Name, puser->Key); 
+		puser = puser->next; 
+	}
 	fclose(fp_user); 
 	
-	FILE *fp_stu = fopen(stu_file_name, "r+"); 
+	//Save User Infomation
+	FILE *fp_stu = fopen(stu_file_name, "w"); 
 	if (fp_stu == NULL) {
 		perror("fopen stu_file_name"); 
 		exit(-1); 
@@ -135,6 +142,7 @@ void Print_Sys_Interface(void)
 	printf("|                                       |\n"); 
 	printf("| \033[1mStudent Information Management System \033[0m|\n"); 
 	printf("|                                       |\n"); 
+	printf("| Esc                             Enter |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
 
@@ -206,3 +214,28 @@ int User_Authonrize(struct user * list_head, struct user * login)
 	}
 	return FALSE; 
 }
+
+void Print_Tch_Interface(void)
+{
+	system("clear"); 
+	printf("+---------------------------------------+\n"); 
+	printf("|                                       |\n"); 
+	printf("| \033[1mA.Reference Student Information\033[0m|\n"); 
+	printf("| \033[1mE.Exit System\033[0m                  |\n"); 
+	printf("|                                       |\n"); 
+	printf("+---------------------------------------+\n"); 
+}
+
+void Print_Stu_Interface(void)
+{
+	system("clear"); 
+	printf("+---------------------------------------+\n"); 
+	printf("|                                       |\n"); 
+	printf("| \033[1mEnter: Reference Your Information\033[0m     |\n"); 
+	printf("|                                       |\n"); 
+	printf("| \033[1mEsc  : Exit System\033[0m                    |\n"); 
+	printf("|                                       |\n"); 
+	printf("+---------------------------------------+\n"); 
+}
+
+
