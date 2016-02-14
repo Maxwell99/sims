@@ -19,15 +19,13 @@ int main(void)
 	
 	for (;;) {
 		if (!User_Authonrize(user, &login)) {
+			printf("login success\n"); 
 			Print_All_Stu_Info(stu); 
 		}
 		else {
 			printf("ID or Key was wrong!\n"); 
 		}	
 	}
-
-	//Add_One_Stu_Info(&stu); 
-	//File_Save(user,stu); 
 
 	Stu_Link_List_Destroy(&stu); 
 	User_Link_List_Destroy(&user); 
