@@ -6,7 +6,6 @@ EXE			:= sims.exe
 DIR_SRC 	:= $(wildcard src)
 DIR_OBJ 	:= $(wildcard bin)
 DIR_INC 	:= $(wildcard include) 
-
 SRC 		 = $(wildcard $(DIR_SRC)/*.c)
 OBJ 		 = $(patsubst %.c, $(DIR_OBJ)/%.o, $(notdir $(SRC)))
 

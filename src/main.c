@@ -11,21 +11,29 @@
 
 int main(void)
 {
-	struct user *user_head = NULL; 
-	struct stu *stu_head = NULL; 
+	struct user * user = NULL; 
+	struct stu * stu = NULL; 
 	struct user login; 
 	memset(&login, 0, sizeof(struct user)); 
 
-	System_Init(&user_head, &stu_head); 
+	System_Init(&user, &stu); 
+	Print_All_User_Info(user); 
+	Print_All_Stu_Info(stu); 
 
 	/*
 	Print_Sys_Interface(); 
 	User_Login(&login); 
-
 	*/
-	
-	Add_One_Stu_Info(&stu_head); 
-	Print_Stu_Info(stu_head); 
+
+	//Add_One_Stu_Info(&stu); 
+
+	Print_All_Stu_Info(stu); 
+	Print_Single_Mark_highest_Stu_Info(stu); 
+
+	File_Save(user,stu); 
+
+	Stu_Link_List_Destroy(&stu); 
+	User_Link_List_Destroy(&user); 
 
 	return 0; 
 }

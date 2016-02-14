@@ -1,43 +1,126 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 #include "user.h"
 #include "student.h"
 #include "linklist.h"
 
 #define FILE_NAME_LEN 20
+#define BUFSIZE 100
 
-void System_Init(struct user **user_head, struct stu **stu_head)
+void System_Init(struct user ** user_list_head, struct stu ** stu_list_head)
 {
-	FILE *config = fopen("src/config", "r"); 
+	FILE * config = fopen("src/config", "r"); 
 	if (config == NULL) {
 		perror("fopen config"); 
 		exit(-1); 
 	}
-	char fuser[FILE_NAME_LEN] = {0}; 
-	char fstu[FILE_NAME_LEN] = {0}; 
-	fscanf(config, "%s%s", fuser, fstu); 
-	//printf("%s\n%s\n", fuser, fstu); 
-	
-	Init_User_Link_List(user_head); 
-	FILE *fp_user = fopen(fuser, "r"); 
-	if (fp_user == NULL) {
-		perror("fopen fuser"); 
-		exit(-1); 
-	}
-	//puts("open fp_user success"); 
-	
-	Init_Stu_Link_List(stu_head); 
-	FILE *fp_stu = fopen(fstu, "w+"); 
-	if (fp_stu == NULL) {
-		perror("fopen fstu"); 
-		exit(-1); 
-	}
-	//puts("open fp_stu success"); 
-	
-	
-	fclose(fp_user); 
-	fclose(fp_stu); 
+	char user_file_name[FILE_NAME_LEN] = {0}; 
+	char stu_file_name[FILE_NAME_LEN] = {0}; 
+	fscanf(config, "%s%s", user_file_name, stu_file_name); 
+	//printf("%s\n%s\n", user_file_name, stu_file_name); 
 	fclose(config); 
+		
+	//Init user linklist 
+	Init_User_Link_List(user_list_head); 
+	FILE *fp_user = fopen(user_file_name, "r"); 
+	if (fp_user == NULL) {
+		perror("fopen user_file_name"); 
+		exit(-1); 
+	}
+	struct user * puser = NULL; 
+	struct user * temp_user = NULL; 
+	do {
+		puser = *user_list_head; 
+		temp_user = (struct user *) malloc(sizeof(struct user)); 
+		memset(temp_user, 0, sizeof(struct user)); 
+		fscanf(fp_user, "%s%s%s", temp_user->ID, temp_user->Name, temp_user->Key); 
+
+		//sorting insert
+		while ((puser->next != NULL) && (strcmp(temp_user->ID, puser->next->ID) > 0)){
+				puser = puser->next; 
+		}
+		if (puser->next == NULL){
+				puser->next = temp_user; 
+		}
+		else {
+				temp_user->next = puser->next; 
+				puser->next = temp_user; 
+		}
+	} while (getc(fp_user) != EOF); 
+	temp_user = NULL; 
+	puser = *user_list_head; 
+	*user_list_head = (*user_list_head)->next; 
+	free(puser); 
+	puser = NULL; 
+	fclose(fp_user); 
+	
+	//Init student linklist 
+	Init_Stu_Link_List(stu_list_head); 
+	FILE *fp_stu = fopen(stu_file_name, "r"); 
+	if (fp_stu == NULL) {
+		perror("fopen stu_file_name"); 
+		exit(-1); 
+	}
+	struct stu * pstu = NULL; 
+	struct stu * temp_stu = NULL; 
+	do {
+		pstu = *stu_list_head; 
+		temp_stu = (struct stu *) malloc(sizeof(struct stu)); 
+		memset(temp_stu, 0, sizeof(struct stu)); 
+		fscanf(fp_stu, "%s%s%d%d%d", temp_stu->ID, temp_stu->Name, &(temp_stu->Grade[0]), &(temp_stu->Grade[1]), &(temp_stu->Grade[2])); 
+
+		//sorting insert
+		while ((pstu->next != NULL) && strcmp(temp_stu->ID, pstu->next->ID) > 0){
+				pstu = pstu->next; 
+		}
+		if (pstu->next == NULL){
+				pstu->next = temp_stu; 
+		}
+		else {
+				temp_stu->next = pstu->next; 
+				pstu->next = temp_stu; 
+		}
+	} while (getc(fp_stu) != EOF); 
+	temp_stu = NULL; 
+	pstu = *stu_list_head; 
+	*stu_list_head = (*stu_list_head)->next; 
+	free(pstu); 
+	pstu = NULL; 
+	fclose(fp_stu); 
+}
+
+void File_Save(struct user * user_list_head, struct stu * stu_list_head)
+{
+	FILE * config = fopen("src/config", "r"); 
+	if (config == NULL) {
+		perror("fopen config"); 
+		exit(-1); 
+	}
+	char user_file_name[FILE_NAME_LEN] = {0}; 
+	char stu_file_name[FILE_NAME_LEN] = {0}; 
+	fscanf(config, "%s%s", user_file_name, stu_file_name); 
+	//printf("%s\n%s\n", user_file_name, stu_file_name); 
+	fclose(config); 
+	
+	FILE *fp_user = fopen(user_file_name, "r+"); 
+	if (fp_user == NULL) {
+		perror("fopen user_file_name"); 
+		exit(-1); 
+	}
+	fclose(fp_user); 
+	
+	FILE *fp_stu = fopen(stu_file_name, "r+"); 
+	if (fp_stu == NULL) {
+		perror("fopen stu_file_name"); 
+		exit(-1); 
+	}
+	struct stu * pstu = stu_list_head->next; 
+	while (pstu!= NULL) {
+		fprintf(fp_stu, "%s %s %d %d %d\n", pstu->ID, pstu->Name, pstu->Grade[0], pstu->Grade[1], pstu->Grade[2]); 
+		pstu = pstu->next; 
+	}
+	fclose(fp_stu); 
 }

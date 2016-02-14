@@ -59,12 +59,12 @@ void User_Login(struct user *login)
 			break; 
 		}
 		else if (ch >= '!' && ch <= '~') {
-			login->KEY[i] = ch; 
+			login->Key[i] = ch; 
 			putchar('*'); 
 		}
 		else {
 			i--; 
 		}
 	}
-	login->KEY[i] = 0; 
+	login->Key[i] = 0; 
 }
