@@ -221,13 +221,12 @@ void Print_Tch_Interface(void)
 	system("clear"); 
 	printf("+---------------------------------------+\n"); 
 	printf("|                                       |\n"); 
-	printf("| \033[1mA.\033[0m                      |\n"); 
-	printf("| \033[1mA.\033[0m                      |\n"); 
-	printf("| \033[1mA.\033[0m                      |\n"); 
-	printf("| \033[1mA.\033[0m                      |\n"); 
-	printf("| \033[1mA.\033[0m                      |\n"); 
+	printf("| \033[1mA.Echo All Student Information\033[0m        |\n"); 
+	printf("| \033[1mB.Add New Student Information\033[0m         |\n"); 
+	printf("| \033[1mC.Delete a Student Information\033[0m        |\n"); 
+	printf("| \033[1mD.Modify a Student Information\033[0m        |\n"); 
+	printf("| \033[1mE.Exit System\033[0m                         |\n"); 
 	printf("|                                       |\n"); 
-	printf("| Esc                             Enter |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
 
@@ -236,7 +235,7 @@ void Print_Stu_Interface(void)
 	system("clear"); 
 	printf("+---------------------------------------+\n"); 
 	printf("|                                       |\n"); 
-	printf("| \033[1mReference Your Information\033[0m            |\n"); 
+	printf("|    \033[1mEcho Your Information  \033[0m            |\n"); 
 	printf("|                                       |\n"); 
 	printf("| Esc                             Enter |\n"); 
 	printf("+---------------------------------------+\n"); 

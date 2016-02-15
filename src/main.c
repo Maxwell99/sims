@@ -36,7 +36,8 @@ int main(void)
 							if (choice == Enter) {
 								//Print_One_Stu_Info(stu, login); 
 								printf("Press any key to exit:"); 
-								getchar(); 
+								getch(); 
+								putchar('\n'); 
 								choice = Esc; 
 								break; 
 							}
@@ -48,9 +49,12 @@ int main(void)
 						for (;;) {
 							Print_Tch_Interface(); 
 							char key[KEY_LEN]; 
-							choice = getch(); 
+							choice = getchar(); 
 							if (choice == 'A' || choice == 'a') {
 								Print_All_Stu_Info(stu); 
+								getchar(); 
+								printf("Press any key back:"); 
+								getch(); 
 							}
 							else if (choice == 'B' || choice == 'b') {
 								Add_One_Stu_Info(&stu); 
@@ -61,7 +65,8 @@ int main(void)
 							else if (choice == 'D' || choice == 'd') {
 								//Modify_One_Stu_Info(&stu, key); 
 							}
-							else if (choice == Esc) {
+							else if (choice == 'E' || choice == 'e') {
+								choice = Esc; 
 								break; 
 							}
 						}
