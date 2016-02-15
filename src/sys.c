@@ -6,7 +6,7 @@
 #include "user.h"
 #include "student.h"
 #include "linklist.h"
-#include "tools.h"
+#include "getch.h"
 
 #define FILE_NAME_LEN 20
 #define TRUE 0
@@ -225,7 +225,8 @@ void Print_Tch_Interface(void)
 	printf("| \033[1mB.Add New Student Information\033[0m         |\n"); 
 	printf("| \033[1mC.Delete a Student Information\033[0m        |\n"); 
 	printf("| \033[1mD.Modify a Student Information\033[0m        |\n"); 
-	printf("| \033[1mE.Exit System\033[0m                         |\n"); 
+	printf("| \033[1mE.Echo Single Mark Highest\033[0m            |\n"); 
+	printf("| \033[1mF.Exit System\033[0m                         |\n"); 
 	printf("|                                       |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
@@ -241,4 +242,3 @@ void Print_Stu_Interface(void)
 	printf("|                                       |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
-

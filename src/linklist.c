@@ -4,9 +4,9 @@
 
 #include "user.h"
 #include "student.h"
-#include "tools.h"
+//#include "tools.h"
 
-#define ElemType_STU struct stu
+#define ElemType_STU struct stu 
 #define ElemType_USER struct user
 #define KEY char *
 
@@ -99,18 +99,18 @@ void Add_One_User_Info(ElemType_USER ** list_head, ElemType_USER entity)
 	pcur = NULL; 
 }
 
-struct stu Del_One_Stu_Info(ElemType_STU ** list_head, KEY key)
+ElemType_STU Del_One_Stu_Info(ElemType_STU ** list_head, KEY key)
 {
 	ElemType_STU * pcur = *list_head; 
 	ElemType_STU * temp = NULL; 
 	ElemType_STU ret;
-	memset(&ret, 0, sizeof(struct stu)); 
+	memset(&ret, 0, sizeof(ElemType_STU)); 
 	while (pcur->next != NULL){
 		if (!strcmp(pcur->next->ID, key) || !strcmp(pcur->next->Name, key)) {
 			temp = pcur->next; 
 			pcur->next = temp->next; 
 			temp->next = NULL; 
-			memcpy(&ret, temp, sizeof(struct stu)); 
+			memcpy(&ret, temp, sizeof(ElemType_STU)); 
 			free(temp); 
 			break; 
 		}
@@ -126,13 +126,13 @@ struct user Del_One_User_Info(ElemType_USER ** list_head, KEY key)
 	ElemType_USER * pcur = *list_head; 
 	ElemType_USER * temp = NULL; 
 	ElemType_USER ret;
-	memset(&ret, 0, sizeof(struct stu)); 
+	memset(&ret, 0, sizeof(ElemType_STU)); 
 	while (pcur->next != NULL){
 		if (!strcmp(pcur->next->ID, key) || !strcmp(pcur->next->Name, key)) {
 			temp = pcur->next; 
 			pcur->next = temp->next; 
 			temp->next = NULL; 
-			memcpy(&ret, temp, sizeof(struct stu)); 
+			memcpy(&ret, temp, sizeof(ElemType_STU)); 
 			free(temp); 
 			break; 
 		}
@@ -198,7 +198,7 @@ void Print_One_Stu_Info(ElemType_STU * list_head, KEY key)
 		printf("\n-----------------------------------------\n"); 
 
 		while (list_head != NULL) {
-			if (strcmp(list_head->ID, key) || strcmp(list_head->Name, key)) {
+			if ((!strcmp(list_head->ID, key)) || (!strcmp(list_head->Name, key))) {
 				printf("%s\t%s\t", list_head->ID, list_head->Name); 
 				for (i = 0; i < STU_COURSE_NUM; i++) {
 					printf("%3d\t",list_head->Grade[i]);
@@ -214,31 +214,34 @@ void Print_One_Stu_Info(ElemType_STU * list_head, KEY key)
 
 void Print_Single_Mark_highest_Stu_Info(ElemType_STU * list_head)
 {
-	printf("-----------------------------------------\n"); 
+	int i; 
+	printf("\n-----------------------------------------\n"); 
 	printf("\033[31m Single Mark Highest Student Information\n\033[0m"); 
-	printf("-----------------------------------------\n"); 
-
-	int i, j; 
-	ElemType_STU * pcur = NULL; 
-	ElemType_STU temp; 
+	printf("\033[31m ID\tName\t\033[0m"); 
 	for (i = 0; i < STU_COURSE_NUM; i++){
-		memset(&temp, 0, sizeof(ElemType_STU)); 
+		printf("\033[31m%s\t\033[0m", COURSE[i]); 
+	}
+	printf("\n-----------------------------------------\n"); 
+
+	int j; 
+	ElemType_STU * pcur = NULL; 
+	ElemType_STU * temp = NULL; 
+	for (i = 0; i < STU_COURSE_NUM; i++){
 		pcur = list_head->next; 
+		temp = list_head->next; 
 		while (pcur != NULL){
-			if (pcur->Grade[i] > temp.Grade[i]){
-					strcpy(temp.ID, pcur->ID); 
-					strcpy(temp.Name, pcur->Name); 
-					for (j = 0; j < STU_COURSE_NUM; j++)
-					temp.Grade[j] = pcur->Grade[j]; 
+			if (pcur->Grade[i] > temp->Grade[i]){
+				temp = pcur; 
 			}
 			pcur = pcur->next; 
 		}
 
-		printf("%s\t%s\t", temp.ID, temp.Name); 
+		printf("%s\t%s\t", temp->ID, temp->Name); 
 		for (j = 0; j < STU_COURSE_NUM; j++){
-			printf("%3d\t",temp.Grade[j]);
+			printf("%3d\t", temp->Grade[j]);
 		}
 		printf("\n"); 
 	}
+	temp = NULL; 
 	pcur = NULL; 
 }

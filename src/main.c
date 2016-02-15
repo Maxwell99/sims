@@ -6,7 +6,7 @@
 #include "student.h"
 #include "sys.h"
 #include "linklist.h"
-#include "tools.h"
+#include "getch.h"
 
 #define Esc 27
 #define Enter '\r'
@@ -36,7 +36,8 @@ int main(void)
 							Print_Stu_Interface(); 
 							choice = getchar(); 
 							if (choice == 'A' || choice == 'a') {
-								Print_One_Stu_Info(stu, login.ID); 
+								//Print_One_Stu_Info(stu, login.ID); 
+								Print_One_Stu_Info(stu, login.Name); 
 								getchar(); 
 								printf("Operation success, press any key to continue"); 
 								getch(); 
@@ -108,6 +109,12 @@ int main(void)
 								getch(); 
 							}
 							else if (choice == 'E' || choice == 'e') {
+								Print_Single_Mark_highest_Stu_Info(stu); 
+								getchar(); 
+								printf("Operation success, press any key to continue"); 
+								getch(); 
+							}
+							else if (choice == 'F' || choice == 'f') {
 								choice = Esc; 
 								break; 
 							}
