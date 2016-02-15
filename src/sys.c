@@ -235,8 +235,10 @@ void Print_Stu_Interface(void)
 	system("clear"); 
 	printf("+---------------------------------------+\n"); 
 	printf("|                                       |\n"); 
-	printf("|    \033[1mEcho Your Information  \033[0m            |\n"); 
+	printf("| \033[1mA.Echo Your Information\033[0m               |\n"); 
+	printf("| \033[1mB.Modify Your Login Password\033[0m          |\n"); 
+	printf("| \033[1mC.Exit System\033[0m                         |\n"); 
 	printf("|                                       |\n"); 
-	printf("| Esc                             Enter |\n"); 
 	printf("+---------------------------------------+\n"); 
 }
+
