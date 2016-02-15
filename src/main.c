@@ -7,11 +7,10 @@
 #include "sys.h"
 #include "linklist.h"
 #include "getch.h"
+#include "pause.h"
 
 #define Esc 27
 #define Enter '\r'
-#define KEY_LEN 20
-
 
 int main(void)
 {
@@ -38,13 +37,31 @@ int main(void)
 							if (choice == 'A' || choice == 'a') {
 								//Print_One_Stu_Info(stu, login.ID); 
 								Print_One_Stu_Info(stu, login.Name); 
-								getchar(); 
-								printf("Operation success, press any key to continue"); 
-								getch(); 
+								System_Pause(); 
 							}
 							else if (choice == 'B' || choice == 'b') {
-								//Modify_One_Stu_Info(&stu, login.ID); 
-								File_Save(user, stu); 
+								char passwd_1[KEY_LEN] = {0}; 
+								char passwd_2[KEY_LEN] = {0}; 
+								int i; 
+								for (i = 0; i < 3; i++) {
+									printf("New password:"); 
+									scanf("%s", passwd_1); 
+									printf("Retype new password:"); 
+									scanf("%s", passwd_2); 
+									if (!strcmp(passwd_1, passwd_2)) {
+										Modify_User_Password(&user, login.ID, passwd_1); 
+										//Modify_User_Password(&user, login.Name, passwd_1); 
+										File_Save(user, stu); 
+										puts("all authentication tokens updated successfully."); 
+										break; 
+									}
+									else 
+										puts("Sorry, passwords do not match."); 
+
+								}
+								if (i == 3) 
+									puts("Have exhausted maximum number of retries for service"); 
+								System_Pause(); 
 							}
 							else if (choice == 'C' || choice == 'c') {
 								choice = Esc; 
@@ -59,9 +76,7 @@ int main(void)
 							choice = getchar(); 
 							if (choice == 'A' || choice == 'a') {
 								Print_All_Stu_Info(stu); 
-								getchar(); 
-								printf("Operation success, press any key to continue"); 
-								getch(); 
+								System_Pause(); 
 							}
 							else if (choice == 'B' || choice == 'b') {
 								struct stu new_stu; 
@@ -87,9 +102,7 @@ int main(void)
 								Add_One_Stu_Info(&stu, new_stu); 
 								Add_One_User_Info(&user, new_user); 
 								File_Save(user, stu); 
-								getchar(); 
-								printf("Operation success, press any key to continue"); 
-								getch(); 
+								System_Pause(); 
 							}
 							else if (choice == 'C' || choice == 'c') {
 								printf("Please input student ID or name:"); 
@@ -97,22 +110,16 @@ int main(void)
 								Del_One_Stu_Info(&stu, key); 
 								Del_One_User_Info(&user, key); 
 								File_Save(user, stu); 
-								getchar(); 
-								printf("Operation success, press any key to continue"); 
-								getch(); 
+								System_Pause(); 
 							}
 							else if (choice == 'D' || choice == 'd') {
-								//Modify_One_Stu_Info(&stu, key); 
+								//Modify_Stu_Info(&stu, key); 
 								File_Save(user, stu); 
-								getchar(); 
-								printf("Operation success, press any key to continue"); 
-								getch(); 
+								System_Pause(); 
 							}
 							else if (choice == 'E' || choice == 'e') {
 								Print_Single_Mark_highest_Stu_Info(stu); 
-								getchar(); 
-								printf("Operation success, press any key to continue"); 
-								getch(); 
+								System_Pause(); 
 							}
 							else if (choice == 'F' || choice == 'f') {
 								choice = Esc; 

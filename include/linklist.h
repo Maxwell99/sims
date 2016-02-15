@@ -9,7 +9,7 @@ struct stu Del_One_Stu_Info(struct stu **, char *);
 struct user Del_One_User_Info(struct user **, char *); 
 
 struct stu Modify_One_Stu_Info(struct stu **, char *); 
-struct user Modify_One_User_Info(struct user **, char *); 
+struct user Modify_User_Password(struct user **, char *, char *); 
 
 void Stu_Link_List_Destroy(struct stu **); 
 void User_Link_List_Destroy(struct user **); 

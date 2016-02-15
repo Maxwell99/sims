@@ -196,7 +196,7 @@ int User_Authonrize(struct user * list_head, struct user * login)
 	while (list_head != NULL) {
 		if (!strcmp(login->ID,list_head->ID)) {
 			if (!strcmp(login->Key,list_head->Key)) {
-				login->Level = list_head->Level; 
+				memcpy(login, list_head, sizeof(struct user)); 
 				return TRUE;
 			}
 		}

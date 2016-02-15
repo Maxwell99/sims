@@ -4,14 +4,13 @@
 
 #include "user.h"
 #include "student.h"
-//#include "tools.h"
 
 #define ElemType_STU struct stu 
 #define ElemType_USER struct user
 #define KEY char *
+#define PASSWD char *
 
 char COURSE[STU_COURSE_NUM][10] = {"Math", "English", "Chinese"}; 
-//extern char COURSE[STU_COURSE_NUM][10]; 
 
 void Init_Stu_Link_List(ElemType_STU ** list_head)
 {
@@ -99,14 +98,14 @@ void Add_One_User_Info(ElemType_USER ** list_head, ElemType_USER entity)
 	pcur = NULL; 
 }
 
-ElemType_STU Del_One_Stu_Info(ElemType_STU ** list_head, KEY key)
+ElemType_STU Modify_Stu_Info(ElemType_STU ** list_head, KEY key)
 {
 	ElemType_STU * pcur = *list_head; 
 	ElemType_STU * temp = NULL; 
 	ElemType_STU ret;
 	memset(&ret, 0, sizeof(ElemType_STU)); 
 	while (pcur->next != NULL){
-		if (!strcmp(pcur->next->ID, key) || !strcmp(pcur->next->Name, key)) {
+		if (!(strcmp(pcur->next->ID, key) && strcmp(pcur->next->Name, key))) {
 			temp = pcur->next; 
 			pcur->next = temp->next; 
 			temp->next = NULL; 
@@ -121,14 +120,54 @@ ElemType_STU Del_One_Stu_Info(ElemType_STU ** list_head, KEY key)
 	return ret;  
 }
 
-struct user Del_One_User_Info(ElemType_USER ** list_head, KEY key)
+ElemType_USER Modify_User_Password(ElemType_USER ** list_head, KEY key, PASSWD password)
+{
+	ElemType_USER * pcur = *list_head; 
+	ElemType_USER ret;
+	memset(&ret, 0, sizeof(ElemType_STU)); 
+	while (pcur->next != NULL){
+		if (!(strcmp(pcur->next->ID, key) && strcmp(pcur->next->Name, key))) {
+			strcpy(pcur->next->Key, password); 
+			memcpy(&ret, pcur->next, sizeof(ElemType_USER)); 
+			ret.next = NULL; 
+			break; 
+		}
+		pcur = pcur->next; 
+	}
+	pcur = NULL; 
+	return ret;  
+}
+
+ElemType_STU Del_One_Stu_Info(ElemType_STU ** list_head, KEY key)
+{
+	ElemType_STU * pcur = *list_head; 
+	ElemType_STU * temp = NULL; 
+	ElemType_STU ret;
+	memset(&ret, 0, sizeof(ElemType_STU)); 
+	while (pcur->next != NULL){
+		if (!(strcmp(pcur->next->ID, key) && strcmp(pcur->next->Name, key))) {
+			temp = pcur->next; 
+			pcur->next = temp->next; 
+			temp->next = NULL; 
+			memcpy(&ret, temp, sizeof(ElemType_STU)); 
+			free(temp); 
+			break; 
+		}
+		pcur = pcur->next; 
+	}
+	temp = NULL; 
+	pcur = NULL; 
+	return ret;  
+}
+
+ElemType_USER Del_One_User_Info(ElemType_USER ** list_head, KEY key)
 {
 	ElemType_USER * pcur = *list_head; 
 	ElemType_USER * temp = NULL; 
 	ElemType_USER ret;
 	memset(&ret, 0, sizeof(ElemType_STU)); 
 	while (pcur->next != NULL){
-		if (!strcmp(pcur->next->ID, key) || !strcmp(pcur->next->Name, key)) {
+		if (!(strcmp(pcur->next->ID, key) && strcmp(pcur->next->Name, key))) {
 			temp = pcur->next; 
 			pcur->next = temp->next; 
 			temp->next = NULL; 
@@ -189,16 +228,16 @@ void Print_One_Stu_Info(ElemType_STU * list_head, KEY key)
 {
 	list_head = list_head->next; 
 	if (list_head != NULL) {
-		int i; 
-		printf("\n-----------------------------------------\n"); 
-		printf("\033[31mID\tName\t\033[0m"); 
-		for (i = 0; i < STU_COURSE_NUM; i++){
-			printf("\033[31m%s\t\033[0m", COURSE[i]); 
-		}
-		printf("\n-----------------------------------------\n"); 
-
 		while (list_head != NULL) {
-			if ((!strcmp(list_head->ID, key)) || (!strcmp(list_head->Name, key))) {
+			if (!(strcmp(list_head->ID, key) && strcmp(list_head->Name, key))) {
+				printf("\n-----------------------------------------\n"); 
+				printf("\033[31mID\tName\t\033[0m"); 
+				int i; 
+				for (i = 0; i < STU_COURSE_NUM; i++){
+					printf("\033[31m%s\t\033[0m", COURSE[i]); 
+				}
+				printf("\n-----------------------------------------\n"); 
+
 				printf("%s\t%s\t", list_head->ID, list_head->Name); 
 				for (i = 0; i < STU_COURSE_NUM; i++) {
 					printf("%3d\t",list_head->Grade[i]);
