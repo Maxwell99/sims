@@ -19,9 +19,6 @@ int main(void)
 	struct user login; 
 	memset(&login, 0, sizeof(struct user)); 
 	System_Init(&user, &stu); 
-	//Print_All_Stu_Info(stu); 
-	//Print_All_User_Info(user); 
-	char COURSE[STU_COURSE_NUM][10] = {"Math", "English", "Chinese"}; 
 		
 	char choice = 0; 
 	for (;;) {
@@ -35,32 +32,17 @@ int main(void)
 							Print_Stu_Interface(); 
 							choice = getchar(); 
 							if (choice == 'A' || choice == 'a') {
-								//Print_One_Stu_Info(stu, login.ID); 
-								Print_One_Stu_Info(stu, login.Name); 
+								//Print_One_Stu_Info(stu, login.Name); 
+								Print_One_Stu_Info(stu, login.ID); 
 								System_Pause(); 
 							}
 							else if (choice == 'B' || choice == 'b') {
-								char passwd_1[KEY_LEN] = {0}; 
-								char passwd_2[KEY_LEN] = {0}; 
-								int i; 
-								for (i = 0; i < 3; i++) {
-									printf("New password:"); 
-									scanf("%s", passwd_1); 
-									printf("Retype new password:"); 
-									scanf("%s", passwd_2); 
-									if (!strcmp(passwd_1, passwd_2)) {
-										Modify_User_Password(&user, login.ID, passwd_1); 
-										//Modify_User_Password(&user, login.Name, passwd_1); 
-										File_Save(user, stu); 
-										puts("all authentication tokens updated successfully."); 
-										break; 
-									}
-									else 
-										puts("Sorry, passwords do not match."); 
-
+								//Change_User_Passwd(&user, login.Name); 
+								if (Change_User_Passwd(&user, login.ID)) {
+									perror("Change_User_Passwd"); 
+									exit(-1); 
 								}
-								if (i == 3) 
-									puts("Have exhausted maximum number of retries for service"); 
+								File_Save(user, stu); 
 								System_Pause(); 
 							}
 							else if (choice == 'C' || choice == 'c') {
@@ -84,23 +66,16 @@ int main(void)
 								struct user new_user; 
 								memset(&new_user, 0, sizeof(struct user)); 
 
-								printf("\033[1mNew Student Information\033[0m\n"); 
-								printf("Student   ID:"); 
-								scanf("%s", new_stu.ID);				 
+								Obtain_One_Stu_Info(&new_stu); 
 								strcpy(new_user.ID, new_stu.ID); 
-								printf("Student Name:"); 
-								scanf("%s", new_stu.Name);
 								strcpy(new_user.Name, new_stu.Name); 
-								int i; 
-								for (i = 0; i < STU_COURSE_NUM; i++){
-									printf("%s\t Mark:", COURSE[i]); 
-									scanf("%d", &(new_stu.Grade[i])); 
-								}
 								strcpy(new_user.Key, "123456"); 
 								new_user.Level = 1; 
 
 								Add_One_Stu_Info(&stu, new_stu); 
+								Print_One_Stu_Info(stu, new_stu.ID); 
 								Add_One_User_Info(&user, new_user); 
+								Print_One_User_Info(user, new_stu.ID); 
 								File_Save(user, stu); 
 								System_Pause(); 
 							}
@@ -113,7 +88,30 @@ int main(void)
 								System_Pause(); 
 							}
 							else if (choice == 'D' || choice == 'd') {
-								//Modify_Stu_Info(&stu, key); 
+								struct stu new_stu, old_stu; 
+								memset(&new_stu, 0, sizeof(struct stu)); 
+								memset(&old_stu, 0, sizeof(struct stu)); 
+								struct user new_user, old_user; 
+								memset(&new_user, 0, sizeof(struct user)); 
+								memset(&old_user, 0, sizeof(struct user)); 
+
+								printf("Please input student ID or Name:"); 
+								scanf("%s", key); 
+								Print_One_Stu_Info(stu, key); 
+								Modify_Stu_Info(&stu, key, &new_stu, &old_stu); 
+								Print_One_Stu_Info(stu, new_stu.ID); 
+
+								if (!((!strcmp(old_stu.ID, new_stu.ID)) && \
+									  (!strcmp(old_stu.Name, new_stu.Name)))) {
+									Del_One_User_Info(&user, key); 
+									strcpy(new_user.ID, new_stu.ID); 
+									strcpy(new_user.Name, new_stu.Name); 
+									strcpy(new_user.Key, "123456"); 
+									new_user.Level = 1; 
+									Add_One_User_Info(&user, new_user); 
+									Print_One_User_Info(user, new_stu.ID); 
+								}
+
 								File_Save(user, stu); 
 								System_Pause(); 
 							}

@@ -50,6 +50,20 @@ void User_Link_List_Destroy(ElemType_USER ** list_head)
 	list_head = NULL; 
 }
 
+void Obtain_One_Stu_Info(ElemType_STU * stu)
+{
+	printf("\033[1mNew Student Information\033[0m\n"); 
+	printf("Student   ID:"); 
+	scanf("%s", stu->ID);				 
+	printf("Student Name:"); 
+	scanf("%s", stu->Name);
+	int i; 
+	for (i = 0; i < STU_COURSE_NUM; i++){
+		printf("%s\t Mark:", COURSE[i]); 
+		scanf("%d", &(stu->Grade[i])); 
+	}
+}
+
 void Add_One_Stu_Info(ElemType_STU ** list_head, ElemType_STU entity)
 {
 	ElemType_STU * pcur = *list_head; 
@@ -69,7 +83,6 @@ void Add_One_Stu_Info(ElemType_STU ** list_head, ElemType_STU entity)
 		temp->next = pcur->next; 
 		pcur->next = temp; 
 	}
-
 	temp = NULL; 
 	pcur = NULL; 
 }
@@ -98,44 +111,62 @@ void Add_One_User_Info(ElemType_USER ** list_head, ElemType_USER entity)
 	pcur = NULL; 
 }
 
-ElemType_STU Modify_Stu_Info(ElemType_STU ** list_head, KEY key)
+void Modify_Stu_Info(ElemType_STU ** list_head, KEY key, ElemType_STU * new_stu, ElemType_STU * old_stu)
 {
-	ElemType_STU * pcur = *list_head; 
-	ElemType_STU * temp = NULL; 
-	ElemType_STU ret;
-	memset(&ret, 0, sizeof(ElemType_STU)); 
-	while (pcur->next != NULL){
-		if (!(strcmp(pcur->next->ID, key) && strcmp(pcur->next->Name, key))) {
-			temp = pcur->next; 
-			pcur->next = temp->next; 
-			temp->next = NULL; 
-			memcpy(&ret, temp, sizeof(ElemType_STU)); 
-			free(temp); 
+	ElemType_STU * pcur = (*list_head)->next; 
+	while (pcur != NULL){
+		if (!(strcmp(pcur->ID, key) && strcmp(pcur->Name, key))) {
+			memcpy(old_stu, pcur, sizeof(ElemType_STU)); 
+			old_stu->next = NULL; 
+			Obtain_One_Stu_Info(new_stu); 
+			strcpy(pcur->ID, new_stu->ID); 
+			strcpy(pcur->Name, new_stu->Name); 
+			int i; 
+			for (i = 0; i < STU_COURSE_NUM; i++){
+				pcur->Grade[i] = new_stu->Grade[i]; 
+			}
+			printf("Information update success!"); 
 			break; 
 		}
 		pcur = pcur->next; 
 	}
-	temp = NULL; 
+	if (pcur == NULL) {
+		printf("The ID or Name provided may not exit!"); 
+	}
+
 	pcur = NULL; 
-	return ret;  
 }
 
-ElemType_USER Modify_User_Password(ElemType_USER ** list_head, KEY key, PASSWD password)
+int Change_User_Passwd(ElemType_USER ** list_head, KEY key)
 {
-	ElemType_USER * pcur = *list_head; 
-	ElemType_USER ret;
-	memset(&ret, 0, sizeof(ElemType_STU)); 
-	while (pcur->next != NULL){
-		if (!(strcmp(pcur->next->ID, key) && strcmp(pcur->next->Name, key))) {
-			strcpy(pcur->next->Key, password); 
-			memcpy(&ret, pcur->next, sizeof(ElemType_USER)); 
-			ret.next = NULL; 
+	ElemType_USER * pcur = (*list_head)->next; 
+	while (pcur != NULL) {
+		if (!(strcmp(pcur->ID, key) && strcmp(pcur->Name, key))) {
+			char passwd_1[KEY_LEN] = {0}; 
+			char passwd_2[KEY_LEN] = {0}; 
+			int i; 
+			for (i = 0; i < 3; i++) {
+				printf("New password:"); 
+				scanf("%s", passwd_1); 
+				printf("Retype new password:"); 
+				scanf("%s", passwd_2); 
+				if (!strcmp(passwd_1, passwd_2)) {
+					strcpy(pcur->Key, passwd_1); 
+					puts("all authentication tokens updated successfully."); 
+					break; 
+				}
+				else 
+					puts("Sorry, passwords do not match."); 
+			}
+			if (i == 3) 
+				puts("Have exhausted maximum number of retries for service"); 
 			break; 
 		}
 		pcur = pcur->next; 
 	}
-	pcur = NULL; 
-	return ret;  
+	if (pcur == NULL)
+		return -1; 
+	return 0; 
 }
 
 ElemType_STU Del_One_Stu_Info(ElemType_STU ** list_head, KEY key)
@@ -186,9 +217,9 @@ void Print_All_Stu_Info(ElemType_STU * list_head)
 {
 	list_head = list_head->next; 
 	if (list_head != NULL) {
-		int i; 
 		printf("\n-----------------------------------------\n"); 
 		printf("\033[31mID\tName\t\033[0m"); 
+		int i; 
 		for (i = 0; i < STU_COURSE_NUM; i++){
 			printf("\033[31m%s\t\033[0m", COURSE[i]); 
 		}
@@ -202,7 +233,6 @@ void Print_All_Stu_Info(ElemType_STU * list_head)
 			printf("\n"); 
 			list_head = list_head->next; 
 		}
-		printf("\n"); 
 	}		
 }
 
@@ -248,7 +278,24 @@ void Print_One_Stu_Info(ElemType_STU * list_head, KEY key)
 			list_head = list_head->next; 
 		}
 	}		
-	printf("\n"); 
+}
+
+void Print_One_User_Info(ElemType_USER * list_head, KEY key)
+{
+	list_head = list_head->next; 
+	if (list_head != NULL) {
+		printf("\n-----------------------------------------\n"); 
+		printf("\033[31mID\tName\tKey\tLevel\033[0m"); 
+		printf("\n-----------------------------------------\n"); 
+
+		while (list_head != NULL) {
+			if (!(strcmp(list_head->ID, key) && strcmp(list_head->Name, key))) {
+				printf("%s\t%s\t%s\t%d", list_head->ID, list_head->Name, list_head->Key, list_head->Level); 
+				printf("\n"); 
+			}
+			list_head = list_head->next; 
+		}
+	}		
 }
 
 void Print_Single_Mark_highest_Stu_Info(ElemType_STU * list_head)
